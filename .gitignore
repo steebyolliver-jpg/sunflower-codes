@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.sites-runtime/
+artifacts/
+*.zip
+node_modules/
+.env
+

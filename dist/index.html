@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8cb46">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="向日葵助手">
+  <meta name="description" content="收好保卫向日葵兑换码，一键复制，用过就打勾。">
+  <title>向日葵兑换码助手</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main class="app">
+    <header class="header"><div class="brand-icon" aria-hidden="true">🌻</div><div><p class="eyebrow">保卫向日葵 · 兑换码收纳</p><h1>今天的阳光，收好啦</h1></div></header>
+    <section class="summary" aria-label="兑换码概况">
+      <div class="summary-top"><div><span class="summary-label">还有这些可以试试</span><div><strong id="remaining">—</strong><span class="unit">个未使用</span></div></div><span class="sun-stamp" aria-hidden="true">✳</span></div>
+      <div class="summary-bottom"><span id="used-count">正在读取兑换码</span><span>复制 → 兑换 → 打勾</span></div>
+    </section>
+    <div class="sync-row"><div><p id="sync-status" role="status">正在读取最近检查时间…</p><p id="automation-status" class="muted">每天检查公开兑换码来源</p></div><button id="refresh" class="refresh" type="button"><span aria-hidden="true">↻</span> 刷新码库</button></div>
+    <p id="storage-warning" class="warning" role="alert" hidden></p>
+    <section class="list-section" aria-label="兑换码列表">
+      <div class="filter-bar" role="group" aria-label="筛选兑换码"><button data-filter="all" aria-pressed="false">全部</button><button data-filter="unused" aria-pressed="true">未使用</button><button data-filter="used" aria-pressed="false">已使用</button></div>
+      <div class="list-meta"><span id="list-count">加载中</span><label class="expired-toggle"><input id="show-expired" type="checkbox">显示已过期</label></div>
+      <div id="code-list" class="code-list" aria-busy="true"><p class="empty">正在收集阳光…</p></div>
+    </section>
+    <details class="help"><summary>使用小贴士 <span aria-hidden="true">＋</span></summary><div><p>复制兑换码后，切回微信游戏，在头像中的兑换入口粘贴。兑换成功后，再回来勾选“已使用”。</p><p>官方公告不一定适用于微信渠道；截图旧码的有效期尚未核实，请以游戏提示为准。</p><p>用 Safari 打开本页，点分享 → 添加到主屏幕，以后从桌面图标进入。尽量一直从同一入口使用。</p><p>勾选只保存在这台手机。清除网站数据、换浏览器或换手机不会保留记录。</p><p>“刷新码库”读取云端已经收集的结果，不会即时搜索全网。每日任务只检查已配置的公开来源，可能遗漏图片或其他渠道的新码。</p></div></details>
+    <footer>收好每一份小福利 <span aria-hidden="true">🌱</span><br><small>玩家自用工具 · 非游戏官方</small></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="manual-copy"><h2>长按复制兑换码</h2><p>自动复制未成功，可以长按下方文字复制。</p><input id="manual-code" readonly aria-label="手动复制兑换码"><button id="close-dialog" type="button">完成</button></dialog>
+</body>
+</html>

@@ -1,0 +1,68 @@
+name: Update codes and publish
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 1 * * *' # Beijing 09:17; scheduling can be delayed.
+  push:
+    branches: [main]
+    paths: ['dist/**', 'scripts/**', 'tests/**', '.github/workflows/**']
+permissions:
+  contents: read
+concurrency:
+  group: sunflower-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify catalog logic
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          node --test tests/core.test.mjs
+          node --check dist/app.mjs
+          node --check dist/sw.js
+      - name: Check official sources
+        id: collect
+        continue-on-error: true
+        run: python3 scripts/update_codes.py
+      - name: Record cloud run
+        if: steps.collect.outcome == 'success'
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('dist/data/codes.json')
+          d = json.loads(p.read_text())
+          d['automationStatus'] = 'enabled'
+          p.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+          PY
+      - name: Preserve catalog history
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist/data/codes.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update public voucher catalog'
+            git push origin HEAD:main
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - name: Publish exact catalog
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Report collection failure after publishing retained data
+        if: steps.collect.outcome == 'failure'
+        run: |
+          echo 'Source check failed. Prior codes retained; failure status published.'
+          exit 1
