@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "lastSuccessfulCheck": "2026-09-14T09:21:31+00:00",
-  "lastAttemptAt": "2026-09-14T09:21:31+00:00",
+  "lastSuccessfulCheck": "2026-09-14T09:26:29+00:00",
+  "lastAttemptAt": "2026-09-14T09:26:29+00:00",
   "checkStatus": "success",
-  "automationStatus": "not_enabled",
+  "automationStatus": "enabled",
   "codes": [
     {
       "code": "t6b1r7G2",
