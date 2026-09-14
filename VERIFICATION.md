@@ -9,14 +9,17 @@
 - 浏览器 9 条流程通过：实际系统剪贴板原码；复制不标已用；浏览器关闭重开后保留勾选；新码合并不改勾选；拒绝异常远程 JSON；复制权限失败有手动窗口；存储失败回滚并提示；离线重开与离线勾选保存；320/390/430/1024 宽度无水平溢出。
 - 浏览器无 JavaScript 运行异常。结果及界面截图位于 `artifacts/browser-results.json`、`artifacts/iphone-preview.png` 和 `artifacts/desktop-preview.png`。
 - 经独立代码检查发现并修复采集范围和日期语境问题；对应失败案例先复现，再通过回归。
+- 用户确认公开部署后，已创建独立公开仓库，并启用 GitHub Pages 与每日北京时间 09:17 的工作流。
+- 首次 push 运行 [34827949859](https://github.com/steebyolliver-jpg/sunflower-codes/actions/runs/34827949859) 与手动触发运行 [34828022155](https://github.com/steebyolliver-jpg/sunflower-codes/actions/runs/34828022155) 均成功，测试、采集、保存、发布均完成。
+- [线上地址](https://steebyolliver-jpg.github.io/sunflower-codes/) HTTP 200；线上 JSON 共 70 条，`checkStatus=success`、`automationStatus=enabled`、成功检查时间 `2026-09-14T09:27:18+00:00`。2026-09-14T09:28:03Z 回读证据保存在 `artifacts/deployment-results.json`。
+- 针对实际 HTTPS 子路径再次运行同一浏览器验证，9 条全部通过，退出码 0，无运行异常；包括真实剪贴板、浏览器关闭重开、云端读取、离线重开等。
 
 ## 验证限制
 
 - 使用已安装 Chromium 的手机尺寸模拟，不是实际 iPhone 或 WebKit。未安装新浏览器依赖。
 - 未在用户微信游戏中实际兑换；截图字符转录和微信渠道适用性仍待验证。
-- GitHub Pages、每日云端工作流、最终 HTTPS 地址尚未启用；配置检查不能替代云端运行证据。
-- 当前页面准确显示“每日自动检查尚未启用”。
-- 未创建远程仓库或公开发布；原始用户截图、FDE 学习记录不属于发布范围。
+- 日更工作流已启用，首次实际云端运行已成功；未来每天 schedule 触发尚需后续运行证据，不把首次成功当作持续可靠性保证。
+- 原始用户截图、FDE 学习记录与本机测试浏览器资料均未上传。
 
 ## 过程中定位的问题
 
@@ -26,4 +29,4 @@
 
 ## 下一入口
 
-确认 `docs/DEPLOYMENT.md` 中的独立公开仓库与 Pages 方案后，执行首次真实发布、回读验证，再由用户做 iPhone 端验收。
+用户在真实 iPhone Safari 打开发布链接，复制到微信并勾选后重开，添加到主屏幕；日常根据页面上的来源检查时间判断新鲜度。
